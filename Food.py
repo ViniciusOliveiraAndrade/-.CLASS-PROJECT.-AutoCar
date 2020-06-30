@@ -33,7 +33,7 @@ class Food():
         with pushMatrix():
             translate(self.position.x, self.position.y)
             rotate(theta)
-            rect((self.r/2)*-1, (self.r/2)*-1, self.r, self.r)
+            rect(0, 0, self.r, self.r)
             # beginShape()
             # vertex(0, -self.r * 2)
             # vertex(-self.r, self.r * 2)

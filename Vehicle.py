@@ -13,7 +13,6 @@ class Vehicle():
         self.r = 6
         self.maxspeed = 5
         self.maxforce = 0.2
-        self.reducesSpeed = False
 
     # Method to update location
     def update(self):
@@ -32,31 +31,21 @@ class Vehicle():
     # A method that calculates a steering force towards a target
     # STEER = DESIRED MINUS VELOCITY
     def seek(self, target):
-        
+
+        # A vector pointing from the location to the target
         desired = target - self.position
-        
-        if self.reducesSpeed:
-            
-            d = desired.mag()
-            if (d < 100):
-                m = map(d, 0, 101, 0, self.maxspeed)
-                desired.setMag(m)
-            else:
-                desired.setMag(self.maxspeed)
-        else:
-            desired.setMag(self.maxspeed)
+
+        # Scale to maximum speed
+        desired.setMag(self.maxspeed)
+
         steer = desired - self.velocity
-        steer.limit(self.maxforce)
+        steer.limit(self.maxforce)  # Limit to maximum steering force
+
         self.applyForce(steer)
-        
-        #=====================Reduces speed===========
-
-        
-
 
     def display(self):
         # Draw a triangle rotated in the direction of velocity
-        theta = self.velocity.heading() + PI / 2
+        theta = self.velocity.heading()# + PI / 2
         fill(127)
         noStroke()
         strokeWeight(1)
