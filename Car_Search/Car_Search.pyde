@@ -3,6 +3,8 @@ from Vehicle import Vehicle
 from Food import Food
 from Score import Score
 
+#Test
+
 def setup():
     global maze, vehicle, food, score, title
     size(600, 400)
