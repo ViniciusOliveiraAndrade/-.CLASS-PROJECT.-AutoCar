@@ -4,11 +4,11 @@ class Maze_Generator(object):
         self.cols = int(screen_width / cols_size)
         self.rows_size = rows_size
         self.cols_size = cols_size
-        self.grid = []
         self.stack = []
         self.generateGrid()
     
     def generateGrid(self):
+        self.grid = []
         for i in range(self.rows):
             self.grid.append([])
             for j in range(self.cols):
@@ -48,7 +48,9 @@ class Maze_Generator(object):
         # else:
         #     self.current_cell = self.stack.pop(len(self.stack)-1)
     
-            
+    def mazeRestart(self):
+        self.generateGrid()
+        self.generateMaze(0,0)
                                             
     def checkNeighbors(self, current_cell):
         neighbors = []
