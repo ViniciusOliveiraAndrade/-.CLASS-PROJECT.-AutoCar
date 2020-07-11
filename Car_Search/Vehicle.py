@@ -45,15 +45,20 @@ class Vehicle():
         
         #=====================Reduces speed===========
 
-        
+    
+    def verifyCollision(self,obj1,obj2):
+        return (obj1.position.x < (obj2.getX() + obj2.r) and (obj1.position.x + obj1.r) > obj2.getX()) and (obj1.position.y < (obj2.getY() + obj2.r) and (obj1.position.y + obj1.r) > obj2.getY())
 
 
     def display(self):
         # Draw a triangle rotated in the direction of velocity
+        # text("Reduces Speed: {0}".format("On" if .reducesSpeed else "Off"),2,26)
         theta = self.velocity.heading() + PI / 2
+        
         fill(127)
         noStroke()
         strokeWeight(1)
+        
         with pushMatrix():
             translate(self.position.x, self.position.y)
             rotate(theta)

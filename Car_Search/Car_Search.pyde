@@ -15,27 +15,27 @@ def setup():
     score = Score(0)
     velocity = PVector(0, 0)
     vehicle = Vehicle(width / 2, height / 2, velocity, title/2)
-    food = Food(random(6,width-6),random(6,height-6),PVector(0,0), title/2)
-    
+    food = Food(random(maze.rows),random(maze.cols), title)
+    print("Rows:{} Cols:{}".format(maze.rows,maze.cols))
     
 def draw():
     background(51)
-    maze.display()
     
-    fill(0)
-    text("Score: {0}".format(score.score),2,11)
-    text("Reduces Speed: {0}".format("On" if vehicle.reducesSpeed else "Off"),2,26)
     vehicle.update()
-    vehicle.display()
+    # food.update()
     
-    food.update()
+    maze.display()
+    score.display()
+    vehicle.display()
     food.display()
     
-    vehicle.seek(food.position)
+    # delay(1000)
     
-    if verifyCollision(vehicle,food):
-        score.score+=1
-        food.position = PVector(random(width-6),random(height-6))
+    vehicle.seek(PVector(food.getX(),food.getY()))
+    
+    if vehicle.verifyCollision(vehicle,food):
+        maze.mazeRestart()
+        score.up()
+        food.updatePosition(random(maze.rows),random(maze.cols))
+        
      
-def verifyCollision(obj1,obj2):
-    return (obj1.position.x < (obj2.position.x + obj2.r) and (obj1.position.x + obj1.r) > obj2.position.x) and (obj1.position.y < (obj2.position.y + obj2.r) and (obj1.position.y + obj1.r) > obj2.position.y)
