@@ -9,7 +9,9 @@
 # Implements Craig Reynold's autonomous steering behaviors
 # One vehicle "seeks"
 # See: http://www.red3d.com/cwr/
-#v.8
+
+# v.12
+
 
 from Vehicle import Vehicle
 from Food import Food
