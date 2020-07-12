@@ -1,7 +1,7 @@
 class Score():
 
-    def __init__(self, score):
-        self.score = score
+    def __init__(self):
+        self.score = 0
     
     def display(self):
         fill(0)
