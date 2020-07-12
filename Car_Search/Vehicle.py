@@ -1,13 +1,13 @@
 class Vehicle():
 
-    def __init__(self, i, j, vel, r):
+    def __init__(self, i, j, r):
         self.i = i
         self.j = j
         self.r = r
         self.path = []
 
     def moveThroughPath(self):
-        delay(500)
+        delay(100)
         if len(self.path) > 0:
             next = self.path[0]
             if self.i == next.i and self.j == next.j:
@@ -33,7 +33,7 @@ class Vehicle():
         return self.i * self.r
         
     def display(self):
-        fill(127)
+        fill(250)
         noStroke()
         rect(self.getX()+4, self.getY()+4, self.r-8, self.r-8)
     

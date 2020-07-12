@@ -20,7 +20,7 @@ class Food():
         return self.i * self.r
         
     def display(self):
-        fill(127)
+        fill(255,0,0)
         noStroke()
         rect(self.getX()+4, self.getY()+4, self.r-8, self.r-8)
         
