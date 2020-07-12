@@ -1,4 +1,4 @@
-from Maze_Generator import Maze_Generator
+from Maze_Generator import Maze_Generator,Cell
 from Vehicle import Vehicle
 from Food import Food
 from Score import Score
@@ -7,21 +7,35 @@ from Score import Score
 
 def setup():
     global maze, vehicle, food, score, title
-    size(600, 400)
-    title = 40
-    maze = Maze_Generator(width, height, title, title) 
+    size(601, 401)
+    title = 20
     
+    maze = Maze_Generator(width, height, title, title) 
     maze.generateMaze(4,4)
+    
     score = Score(0)
+    
     velocity = PVector(0, 0)
-    vehicle = Vehicle(width / 2, height / 2, velocity, title/2)
+    vehicle = Vehicle(0, 0, velocity, title)
+    
     food = Food(random(maze.rows),random(maze.cols), title)
-    print("Rows:{} Cols:{}".format(maze.rows,maze.cols))
+    path=[]
+    path.append(Cell(0,0, title,title))
+    path.append(Cell(1,0, title,title))
+    path.append(Cell(2,0, title,title))
+    path.append(Cell(3,0, title,title))
+    path.append(Cell(3,1, title,title))
+    path.append(Cell(3,2, title,title))
+    path.append(Cell(3,3, title,title))
+    
+    vehicle.path = path[:]
+    
+    
     
 def draw():
     background(51)
     
-    vehicle.update()
+    # vehicle.update()
     # food.update()
     
     maze.display()
@@ -29,13 +43,14 @@ def draw():
     vehicle.display()
     food.display()
     
-    # delay(1000)
+    delay(1000)
     
-    vehicle.seek(PVector(food.getX(),food.getY()))
+    vehicle.moveThroughPath()
     
-    if vehicle.verifyCollision(vehicle,food):
+    # vehicle.seek(PVector(food.getX(),food.getY()))
+    
+    if vehicle.verifyCollision(food):
         maze.mazeRestart()
         score.up()
         food.updatePosition(random(maze.rows),random(maze.cols))
-        
-     
+    

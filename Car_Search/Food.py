@@ -15,6 +15,7 @@ class Food():
     
     def getX(self):
          return self.j * self.r
+     
     def getY(self):
         return self.i * self.r
         

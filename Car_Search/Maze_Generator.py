@@ -2,6 +2,7 @@ class Maze_Generator(object):
     def __init__(self, screen_width, screen_height, rows_size, cols_size):
         self.rows = int(screen_height / rows_size)
         self.cols = int(screen_width / cols_size)
+        print("Rows:{} Cols:{}".format(self.rows,self.cols))
         self.rows_size = rows_size
         self.cols_size = cols_size
         self.stack = []
@@ -110,6 +111,11 @@ class Cell(object):
         self.h_size = h_size
         self.walls = [True, True, True, True]
         self.visited = False
+    
+    def getX(self):
+         return self.j * self.w_size
+    def getY(self):
+        return self.i * self.h_size
     
     def display(self):
         x = self.j * self.w_size
