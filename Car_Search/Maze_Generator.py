@@ -31,23 +31,6 @@ class Maze_Generator(object):
                 self.current_cell = self.stack.pop(len(self.stack)-1)
         print("Maze Generator Has Finished!")
                 
-        # ==================================Genarete with delay========================
-         
-        # delay(100)
-        # first = False
-        # if len(self.stack) == 0 and not first:
-        #     self.current_cell = self.grid[i][j] 
-        #     self.current_cell.visited = True
-        #     self.stack.append(self.current_cell)
-        #     first = True
-        # next_cell = self.checkNeighbors(self.current_cell)
-        # if len(self.stack) > 0 and next_cell is not None:
-        #     next_cell.visited = True
-        #     self.stack.append(next_cell)
-        #     self.removeWalls(self.current_cell, next_cell)
-        #     self.current_cell = next_cell
-        # else:
-        #     self.current_cell = self.stack.pop(len(self.stack)-1)
     
     def mazeRestart(self):
         self.generateGrid()
@@ -72,7 +55,34 @@ class Maze_Generator(object):
             return neighbors[int(random(len(neighbors)))]
         return None
                 
-                
+    def getNeighbors(self, gridPoint):
+        neighbors = []
+        cell = self.grid[gridPoint.i][gridPoint.j]
+        if cell.i > 0 and not self.grid[cell.i - 1][cell.j].walls[2] and not self.grid[cell.i - 1][cell.j].used(): #Verify top
+            c = self.grid[cell.i - 1][cell.j]
+            c.fron()
+            neighbors.append(c)
+        
+        if cell.j < self.cols -1 and not self.grid[cell.i][cell.j + 1].walls[3] and not self.grid[cell.i][cell.j + 1].used():  #Verify right
+            c = self.grid[cell.i][cell.j + 1]
+            c.fron()
+            neighbors.append(c)
+        
+        if cell.i < self.rows - 1 and not self.grid[cell.i + 1][cell.j].walls[0] and not self.grid[cell.i + 1][cell.j].used(): #Verify botton
+            c = self.grid[cell.i + 1][cell.j]
+            c.fron()
+            neighbors.append(c)
+        
+        if cell.j > 0 and not self.grid[cell.i][cell.j -1].walls[1] and not self.grid[cell.i][cell.j -1].used(): #Verify left
+            c = self.grid[cell.i][cell.j -1]
+            c.fron()
+            neighbors.append(c)
+        
+        if len(neighbors) > 0:
+            return neighbors
+        else:
+            return []
+                            
     def removeWalls(self, cell_a, cell_b):
         x = cell_a.j - cell_b.j
         if x == 1:
@@ -111,6 +121,25 @@ class Cell(object):
         self.h_size = h_size
         self.walls = [True, True, True, True]
         self.visited = False
+        self.expanded = False
+        self.inFront = False
+        self.isPath = False
+        
+    def fron(self):
+        self.expanded = False
+        self.inFront = True
+    
+    def ex(self):
+        self.expanded = True
+        self.inFront = False
+    
+    def pa(self):
+        self.expanded = False
+        self.inFront = False
+        self.isPath = True
+        
+    def used(self):
+        return self.expanded or self.inFront
     
     def getX(self):
          return self.j * self.w_size
@@ -120,7 +149,26 @@ class Cell(object):
     def display(self):
         x = self.j * self.w_size
         y = self.i * self.h_size
+        
+        if self.visited:
+            noStroke()
+            
+            fill(255,255,255,100)
+            
+            rect(x, y, self.w_size, self.h_size)
+            
+            if self.inFront:
+                fill (255,255,0)
+                rect(x+1, y+1, self.w_size-2, self.h_size-2)
+            if self.expanded:
+                fill (0,255,0)
+                rect(x+1, y+1, self.w_size-2, self.h_size-2)
+            if self.isPath:
+                fill (0,0,255)
+                rect(x+1, y+1, self.w_size-2, self.h_size-2)
+            
         stroke(255)
+        strokeWeight(4)
         # fill(255,255,255)
         # text("i={} j={}".format(self.i, self.j), x +2, y+15)
         if self.walls[0]:
@@ -131,7 +179,3 @@ class Cell(object):
             line(x + self.w_size, y + self.h_size, x, y + self.h_size )
         if self.walls[3]:
             line(x, y + self.h_size, x, y)
-        if self.visited:
-            noStroke()
-            fill(255,0,255,100)
-            rect(x, y, self.w_size, self.h_size)
