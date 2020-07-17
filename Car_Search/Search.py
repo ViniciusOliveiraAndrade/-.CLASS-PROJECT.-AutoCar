@@ -25,6 +25,12 @@ class Search (object):
             self.frontier.append(State(cell, path=path))
         # self.printFrontier()
     
+    def dfsAddFrontier(self,states, path):
+        temp = []
+        for cell in states:
+            self.temp.append(State(cell, path=path))
+        self.frontier = temp.extend(self.frontier)
+    
     def bfs(self): #largura
         if not self.hasPath:
             self.maze.display()
@@ -48,7 +54,6 @@ class Search (object):
                     self.hasPath = True
                     for c in self.path:
                         c.pa()
-
             
     def printFrontier(self):
         s = ""
