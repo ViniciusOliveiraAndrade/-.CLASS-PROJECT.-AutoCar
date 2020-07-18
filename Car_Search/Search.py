@@ -28,9 +28,10 @@ class Search (object):
     def dfsAddFrontier(self,states, path):
         temp = []
         for cell in states:
-            self.temp.append(State(cell, path=path))
-        self.frontier = temp.extend(self.frontier)
-    
+            temp.append(State(cell, path=path))
+        temp.extend(self.frontier)
+        self.frontier = temp
+        
     def bfs(self): #largura
         if not self.hasPath:
             self.maze.display()
@@ -54,7 +55,30 @@ class Search (object):
                     self.hasPath = True
                     for c in self.path:
                         c.pa()
+    def dfs(self): #profundidade
+        if not self.hasPath:
+            self.maze.display()
+            # delay(100)
             
+            if self.first:
+                cell = self.maze.grid[self.startPoint.i][self.startPoint.j]
+                self.first = False
+                state = State(cell)
+                self.frontier.append(state)
+                cell.fron()
+                # self.printFrontier()
+                
+            else :
+                state = self.frontier.pop(0)
+                state.gridPonit.ex()
+                if not self.verifyEndState(state.gridPonit): # and len(self.frontier) > 0
+                    self.dfsAddFrontier(self.maze.getNeighbors(state.gridPonit), state.path)
+                else:
+                    self.path = state.path
+                    self.hasPath = True
+                    for c in self.path:
+                        c.pa()
+                               
     def printFrontier(self):
         s = ""
         for i, state in enumerate(self.frontier):

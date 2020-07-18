@@ -25,6 +25,7 @@ def setup():
 def draw():
     background(51)
     # search.bfs()
+    search.dfs()
     maze.display()
     score.display()
     vehicle.display()
