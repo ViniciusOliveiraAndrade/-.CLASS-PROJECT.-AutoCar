@@ -1,3 +1,4 @@
+import math
 class Search (object):
     def __init__(self,maze, startPoint, endPoint):
         self.startPoint = startPoint
@@ -35,13 +36,14 @@ class Search (object):
         temp.extend(self.frontier)
         self.frontier = temp
     
-    def dlsAddFrontier(self,states, path):
-        temp = []
+    def greedyAddFrontier(self,states, path):
         for cell in states:
-            temp.append(State(cell, path=path))
-        temp.extend(self.frontier)
-        self.frontier = temp
-        
+            self.frontier.append(State(cell, fg = self.eucliDist(cell.i,cell.j, self.endPoint.i, self.endPoint.j), path=path))
+        self.frontier.sort(key=lambda x: x.fg)
+    
+    def eucliDist(self, x0, x1, y0, y1):
+        return math.sqrt(((x0 - y0) ** 2) + ((x1 - y1) ** 2))                
+                                    
     def search(self, type = 1): #largura
         if not self.hasPath:
             self.maze.display()
@@ -62,11 +64,9 @@ class Search (object):
                         self.bfsAddFrontier(self.maze.getNeighbors(state.gridPonit), state.path)
                     elif type == 2:# DFS
                         self.dfsAddFrontier(self.maze.getNeighbors(state.gridPonit), state.path)
-                    elif type == 3:# DLS
-                        self.dlsAddFrontier(self.maze.getNeighbors(state.gridPonit), state.path)
+                    elif type == 3:# Greedy
+                        self.greedyAddFrontier(self.maze.getNeighbors(state.gridPonit), state.path)
                     elif type == 4:
-                        pass
-                    elif type == 5:
                         pass
                     else:
                         self.bfsAddFrontier(self.maze.getNeighbors(state.gridPonit), state.path)
@@ -75,7 +75,7 @@ class Search (object):
                     self.hasPath = True
                     for c in self.path:
                         c.pa()
-                
+                                        
     
     def printFrontier(self):
         s = ""

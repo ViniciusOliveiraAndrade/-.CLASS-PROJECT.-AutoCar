@@ -36,22 +36,3 @@ class Vehicle():
         fill(250)
         noStroke()
         rect(self.getX()+4, self.getY()+4, self.r-8, self.r-8)
-    
-    # def display(self):
-        # Draw a triangle rotated in the direction of velocity
-        # text("Reduces Speed: {0}".format("On" if .reducesSpeed else "Off"),2,26)
-        # theta = self.velocity.heading() + PI / 2
-        
-        # fill(127)
-        # noStroke()
-        # strokeWeight(1)
-        
-        # with pushMatrix():
-        #     translate(self.position.x, self.position.y)
-        #     rotate(theta)
-        #     beginShape()
-        #     vertex(0, -self.r * 2)
-        #     vertex(-self.r, self.r * 2)
-        #     vertex(self.r, self.r * 2)
-        #     endShape(CLOSE)
-        # rect(self.position.x, self.position.x, self.r, self.r)
