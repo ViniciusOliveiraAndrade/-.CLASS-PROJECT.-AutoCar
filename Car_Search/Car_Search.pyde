@@ -24,13 +24,13 @@ def setup():
     
 def draw():
     background(51)
-    # search.bfs()
-    search.dfs()
+    
+    search.search(2)
+    
     maze.display()
     score.display()
     vehicle.display()
     food.display()
-    
     
     if search.hasPath:
         vehicle.path = search.path

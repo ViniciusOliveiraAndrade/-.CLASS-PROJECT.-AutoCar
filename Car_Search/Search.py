@@ -7,6 +7,7 @@ class Search (object):
         self.frontier = []
         self.hasPath = False
         self.path = []
+        self.depth = 0
         
     def restart(self,maze, startPoint, endPoint):
         self.startPoint = startPoint
@@ -15,7 +16,9 @@ class Search (object):
         self.first = True
         self.frontier = []
         self.hasPath = False
-        self.path = []
+        self.path = []            
+        self.depth = 0
+        
         
     def verifyEndState(self,p):
         return p.i == self.endPoint.i and p.j == self.endPoint.j 
@@ -31,12 +34,18 @@ class Search (object):
             temp.append(State(cell, path=path))
         temp.extend(self.frontier)
         self.frontier = temp
+    
+    def dlsAddFrontier(self,states, path):
+        temp = []
+        for cell in states:
+            temp.append(State(cell, path=path))
+        temp.extend(self.frontier)
+        self.frontier = temp
         
-    def bfs(self): #largura
+    def search(self, type = 1): #largura
         if not self.hasPath:
             self.maze.display()
-            # delay(100)
-            
+            delay(100)
             if self.first:
                 cell = self.maze.grid[self.startPoint.i][self.startPoint.j]
                 self.first = False
@@ -44,41 +53,30 @@ class Search (object):
                 self.frontier.append(state)
                 cell.fron()
                 # self.printFrontier()
-                
-            else :
-                state = self.frontier.pop(0)
-                state.gridPonit.ex()
-                if not self.verifyEndState(state.gridPonit): # and len(self.frontier) > 0
-                    self.bfsAddFrontier(self.maze.getNeighbors(state.gridPonit), state.path)
-                else:
-                    self.path = state.path
-                    self.hasPath = True
-                    for c in self.path:
-                        c.pa()
-    def dfs(self): #profundidade
-        if not self.hasPath:
-            self.maze.display()
-            # delay(100)
             
-            if self.first:
-                cell = self.maze.grid[self.startPoint.i][self.startPoint.j]
-                self.first = False
-                state = State(cell)
-                self.frontier.append(state)
-                cell.fron()
-                # self.printFrontier()
-                
             else :
                 state = self.frontier.pop(0)
                 state.gridPonit.ex()
                 if not self.verifyEndState(state.gridPonit): # and len(self.frontier) > 0
-                    self.dfsAddFrontier(self.maze.getNeighbors(state.gridPonit), state.path)
+                    if type == 1: # BFS
+                        self.bfsAddFrontier(self.maze.getNeighbors(state.gridPonit), state.path)
+                    elif type == 2:# DFS
+                        self.dfsAddFrontier(self.maze.getNeighbors(state.gridPonit), state.path)
+                    elif type == 3:# DLS
+                        self.dlsAddFrontier(self.maze.getNeighbors(state.gridPonit), state.path)
+                    elif type == 4:
+                        pass
+                    elif type == 5:
+                        pass
+                    else:
+                        self.bfsAddFrontier(self.maze.getNeighbors(state.gridPonit), state.path)
                 else:
                     self.path = state.path
                     self.hasPath = True
                     for c in self.path:
                         c.pa()
-                               
+                
+    
     def printFrontier(self):
         s = ""
         for i, state in enumerate(self.frontier):
