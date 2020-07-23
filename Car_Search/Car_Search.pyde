@@ -8,7 +8,7 @@ from Search import Search, GridPoint
 def setup():
     global maze, vehicle, food, score, title, search
     size(601, 401)
-    title = 40
+    title = 20
     
     maze = Maze_Generator(width, height, title, title) 
     maze.generateMaze(4,4)
@@ -25,7 +25,7 @@ def setup():
 def draw():
     background(51)
     
-    search.search(3)
+    search.search(2)
     
     maze.display()
     score.display()
