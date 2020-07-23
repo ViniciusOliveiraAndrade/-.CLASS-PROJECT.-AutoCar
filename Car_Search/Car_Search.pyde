@@ -25,7 +25,8 @@ def setup():
 def draw():
     background(51)
     
-    search.search(2)
+    search.search(3)
+    # search.dlsSearch()
     
     maze.display()
     score.display()
